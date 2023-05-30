@@ -36,4 +36,46 @@ describe Library do
     expect(@dpl.authors).to eq([@charlotte_bronte, @harper_lee])
     expect(@dpl.books).to eq([@jane_eyre, @professor, @villette, @mockingbird])
   end
+
+  it 'reports earliest and latest publication available of an author' do
+    @dpl.add_author(@charlotte_bronte)
+    expect(@dpl.publication_time_frame(@charlotte_bronte)).to eq({start: "1847", end: "1857"})
+    expect(@dpl.publication_time_frame(@harper_lee)).to eq("Author not found")
+  end
+
+  it 'can checkout books, if available and not already checked out' do
+    expect(@dpl.checkout(@jane_eyre)).to eq(false)
+    @dpl.add_author(@charlotte_bronte)
+    expect(@dpl.checkout(@jane_eyre)).to eq(true)
+    expect(@dpl.checkout(@jane_eyre)).to eq(false)
+    expect(@dpl.checkout(@professor)).to eq(true)
+    expect(@dpl.checkout(@professor)).to eq(false)
+  end
+
+  it 'can report books currently checked out' do
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    expect(@dpl.books).to eq([@jane_eyre, @professor, @villette, @mockingbird])
+    expect(@dpl.checked_out_books).to eq([])
+    @dpl.checkout(@jane_eyre)
+    @dpl.checkout(@professor)
+    @dpl.checkout(@mockingbird)
+    expect(@dpl.checked_out_books).to eq([@jane_eyre, @professor, @mockingbird])
+  end
+
+  #method: books_available 
+    #not required. Do last for funsies
+
+  it 'can return checked out books' do
+    @dpl.add_author(@charlotte_bronte)
+    expect(@dpl.return(@jane_eyre)).to eq("Jane Eyre is not checked out")
+    @dpl.checkout(@jane_eyre)
+    expect(@dpl.return(@professor)).to eq("The Professor is not checked out")
+    @dpl.checkout(@professor)
+    expect(@dpl.checked_out_books).to eq([@jane_eyre, @professor])
+    @dpl.return(@jane_eyre)
+    expect(@dpl.checked_out_books).to eq([@professor])
+    @dpl.return(@professor)
+    expect(@dpl.checked_out_books).to eq([])
+  end
 end
