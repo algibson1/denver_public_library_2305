@@ -78,4 +78,28 @@ describe Library do
     @dpl.return(@professor)
     expect(@dpl.checked_out_books).to eq([])
   end
+
+  it 'can report which book is checked out most' do
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    10.times do |iteration|
+      @dpl.checkout(@professor)
+      @dpl.return(@professor)
+    end
+    20.times do |iteration|
+      @dpl.checkout(@mockingbird)
+      @dpl.return(@mockingbird)
+    end
+    15.times do |iteration|
+      @dpl.checkout(@jane_eyre)
+      @dpl.return(@jane_eyre)
+    end
+    expect(@dpl.most_popular_book).to eq(@mockingbird)
+  end
+
+  it 'reports inventory' do
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    expect(@dpl.inventory).to eq({@charlotte_bronte => [@jane_eyre, @professor, @villette], @harper_lee => [@mockingbird]})
+  end
 end
