@@ -34,4 +34,17 @@ class Library
     @checked_out_books.delete(book)
     book.return
   end
+
+  def most_popular_book 
+    books_ordered_by_popularity = @books.sort_by {|book| book.times_checked_out}
+    books_ordered_by_popularity.last
+  end
+
+  def inventory
+    inventory = {}
+    @authors.each do |author|
+      inventory[author] = author.books
+    end
+    inventory
+  end
 end
