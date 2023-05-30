@@ -21,4 +21,33 @@ describe Book do
   it 'has a publication year' do
     expect(@book.publication_year).to eq("1960")
   end
+
+  it 'can be checked out, but not if already checked out' do
+    expect(@book.checkout).to eq(true)
+    expect(@book.checkout).to eq(false)
+  end
+
+  it 'can be returned after being checked out, and thus can be checked out again' do
+    expect(@book.return).to eq("Not checked out")
+    @book.checkout
+    @book.return
+    expect(@book.checkout).to eq(true)
+  end
+
+  it 'can count how often it is checked out' do
+    expect(@book.times_checked_out).to eq(0)
+    @book.checkout
+    expect(@book.times_checked_out).to eq(1)
+    @book.return
+    expect(@book.times_checked_out).to eq(1)
+    @book.checkout
+    @book.checkout
+    @book.checkout
+    expect(@book.times_checked_out).to eq(2)
+    @book.return
+    @book.checkout
+    @book.return
+    @book.checkout
+    expect(@book.times_checked_out).to eq(4)
+  end
 end
