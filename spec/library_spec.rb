@@ -70,6 +70,8 @@ describe Library do
     @dpl.checkout(@jane_eyre)
     @dpl.checkout(@professor)
     expect(@dpl.books_available).to eq([@villette, @mockingbird])
+    @dpl.return(@professor)
+    expect(@dpl.books_available).to eq([@villette, @mockingbird, @professor])
   end
 
   it 'can return checked out books' do
