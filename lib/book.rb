@@ -1,6 +1,6 @@
 class Book
   attr_reader :title,
-              :times_checked_out
+              :times_checked_out,
   def initialize(book_details)
     @author_first_name = book_details[:author_first_name]
     @author_last_name = book_details[:author_last_name]
@@ -22,6 +22,10 @@ class Book
     return false if @checked_out_status == true
     @times_checked_out += 1
     @checked_out_status = true
+  end
+
+  def checked_out?
+    @checked_out_status
   end
   
   def return
