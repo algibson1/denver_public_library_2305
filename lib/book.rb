@@ -1,6 +1,6 @@
 class Book
   attr_reader :title,
-              :times_checked_out,
+              :times_checked_out
   def initialize(book_details)
     @author_first_name = book_details[:author_first_name]
     @author_last_name = book_details[:author_last_name]
