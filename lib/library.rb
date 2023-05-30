@@ -35,6 +35,10 @@ class Library
     book.return
   end
 
+  def books_available
+    @books.find_all {|book| !book.checked_out?}
+  end
+
   def most_popular_book 
     books_ordered_by_popularity = @books.sort_by {|book| book.times_checked_out}
     books_ordered_by_popularity.last
