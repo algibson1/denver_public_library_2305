@@ -22,8 +22,13 @@ describe Book do
     expect(@book.publication_year).to eq("1960")
   end
 
+  it 'has a checkout status' do
+    expect(@book.checked_out?).to eq(false)
+  end
+
   it 'can be checked out, but not if already checked out' do
     expect(@book.checkout).to eq(true)
+    expect(@book.checked_out?).to eq(true)
     expect(@book.checkout).to eq(false)
   end
 
@@ -31,6 +36,7 @@ describe Book do
     expect(@book.return).to eq("Not checked out")
     @book.checkout
     @book.return
+    expect(@book.checked_out?).to eq(false)
     expect(@book.checkout).to eq(true)
   end
 
