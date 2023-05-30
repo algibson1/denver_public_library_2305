@@ -63,8 +63,14 @@ describe Library do
     expect(@dpl.checked_out_books).to eq([@jane_eyre, @professor, @mockingbird])
   end
 
-  #method: books_available 
-    #not required. Do last for funsies
+  it 'can report books not checked out, too' do
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    expect(@dpl.books_available).to eq([@jane_eyre, @professor, @villette, @mockingbird])
+    @dpl.checkout(@jane_eyre)
+    @dpl.checkout(@professor)
+    expect(@dpl.books_available).to eq([@villette, @mockingbird])
+  end
 
   it 'can return checked out books' do
     @dpl.add_author(@charlotte_bronte)
